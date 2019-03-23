@@ -12,6 +12,15 @@ namespace DotNetMemoryAllocation
 
         static void Main(string[] args)
         {
+
+            MaxMemory();
+            SingleObject();
+            Console.ReadLine();
+        }
+
+        public static void MaxMemory()
+        {
+            Console.WriteLine(@"Task #1: Amount of available memory to allocate");
             Console.WriteLine(@"Starting heap size: {0} b", GC.GetTotalMemory(false));
             long maxHeapSize = GC.GetTotalMemory(false);
             List<UserInfo> list = new List<UserInfo>();
@@ -46,9 +55,56 @@ namespace DotNetMemoryAllocation
                 }
             }
 
-            Console.ReadLine();
+            // collect all the garbage
+            GC.Collect(0, GCCollectionMode.Forced);
+            GC.Collect(1, GCCollectionMode.Forced);
+            GC.Collect(2, GCCollectionMode.Forced);
+            GC.WaitForPendingFinalizers();
+
+            Console.WriteLine(@"Cleaned heap size: {0} b", GC.GetTotalMemory(false));
+        }
+
+        public static void SingleObject()
+        {
+            Console.WriteLine(@"Task #2: Max size of single block available in heap to allocate");
+            Console.WriteLine(@"Starting heap size: {0} b", GC.GetTotalMemory(false));
+            long startHeapSize = GC.GetTotalMemory(false);
+            long maxHeapSize = GC.GetTotalMemory(false);
+            bool isExceptionThrown = false;
+            while (!isExceptionThrown)
+            {
+                StringBuilder myStringBuilder = new StringBuilder();
+                try
+                {
+                    for (long i = 0; i < long.MaxValue; i++)
+                    {
+                        myStringBuilder.Insert(myStringBuilder.Length, i.ToString()); 
+                        if (i % BILLION == 0)
+                        {
+                            if (maxHeapSize < GC.GetTotalMemory(false))
+                            {
+                                maxHeapSize = GC.GetTotalMemory(false);
+                            }
+                            Console.WriteLine(@"Now heap size: {0} b for {1} billion created objects", GC.GetTotalMemory(false), i / BILLION);
+                        }
+                    }
+
+                }
+                catch (OutOfMemoryException)
+                {
+                    isExceptionThrown = true;
+                    maxHeapSize = GC.GetTotalMemory(false);
+                    Console.WriteLine("OutOfMemoryException was thrown");
+                    Console.WriteLine(@"Max heap size: {0} b", maxHeapSize);
+                    Console.WriteLine(@"Object max size: {0} b", maxHeapSize - startHeapSize);
+                    break;
+                }
+            }
+
         }
     }
+
+
 
     class UserInfo
     {
