@@ -60,13 +60,16 @@ namespace DotNetMemoryAllocation
                     Console.WriteLine(@"Max heap size: {0} b", maxHeapSize);
                     break;
                 }
-            }
+                finally
+                {
+                    // collect all the garbage
+                    GC.Collect(0, GCCollectionMode.Forced);
+                    GC.Collect(1, GCCollectionMode.Forced);
+                    GC.Collect(2, GCCollectionMode.Forced);
+                    GC.WaitForPendingFinalizers();
+                }
 
-            // collect all the garbage
-            GC.Collect(0, GCCollectionMode.Forced);
-            GC.Collect(1, GCCollectionMode.Forced);
-            GC.Collect(2, GCCollectionMode.Forced);
-            GC.WaitForPendingFinalizers();
+            }
 
             Console.WriteLine(@"Cleaned heap size: {0} b", GC.GetTotalMemory(false));
         }
