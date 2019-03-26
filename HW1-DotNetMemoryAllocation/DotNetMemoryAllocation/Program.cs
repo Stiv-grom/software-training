@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.VisualBasic.Devices;
 
 namespace DotNetMemoryAllocation
 {
@@ -12,9 +13,15 @@ namespace DotNetMemoryAllocation
 
         static void Main(string[] args)
         {
+            ComputerInfo ci = new ComputerInfo();
+            Console.WriteLine(@"Total RAM memory: {0} b", ci.TotalPhysicalMemory);
 
+            // Task #1
             MaxMemory();
+
+            // Task #2
             SingleObject();
+
             Console.ReadLine();
         }
 
@@ -103,8 +110,6 @@ namespace DotNetMemoryAllocation
 
         }
     }
-
-
 
     class UserInfo
     {
