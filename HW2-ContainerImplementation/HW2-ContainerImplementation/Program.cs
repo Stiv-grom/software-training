@@ -16,11 +16,23 @@ namespace HW2_ContainerImplementation
 
             int containerSize = 1000;
 
+            StringObjectContainer(containerSize);
             UseFirstHashAlgorithm(containerSize);
             UseFSecondHashAlgorithm(containerSize);
             UseThirdtHashAlgorithm(containerSize);
 
             Console.ReadLine();
+        }
+
+        static void StringObjectContainer(int containerSize)
+        {
+            Console.WriteLine("Using first algorithm: 101 * ((key >> 24) + 101 * ((key >> 16) + 101 * (key >> 8))) + key;");
+            Container<string, object> container = new Container<string, object>(containerSize);
+
+            for (int i = 0; i < containerSize; i++)
+            {
+                container.Add(RandomString(5), RandomString(), HashMethodImplementation.GenerateHashCodeFirstCase);
+            }
         }
 
         static void UseFirstHashAlgorithm(int containerSize)
@@ -56,9 +68,8 @@ namespace HW2_ContainerImplementation
             }
         }
 
-        public static string RandomString()
+        public static string RandomString(int length = 50)
         {
-            int length = 50;
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
             return new string(Enumerable.Repeat(chars, length)
                 .Select(s => s[random.Next(s.Length)]).ToArray());
