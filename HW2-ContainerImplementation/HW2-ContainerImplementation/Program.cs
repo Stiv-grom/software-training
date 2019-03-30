@@ -14,7 +14,7 @@ namespace HW2_ContainerImplementation
         {
             Console.WriteLine("HW2: Implement Javascript-like associated container");
 
-            int containerSize = 1000;
+            int containerSize = 100000;
 
             StringObjectContainer(containerSize);
             UseFirstHashAlgorithm(containerSize);
@@ -26,13 +26,14 @@ namespace HW2_ContainerImplementation
 
         static void StringObjectContainer(int containerSize)
         {
-            Console.WriteLine("Using first algorithm: 101 * ((key >> 24) + 101 * ((key >> 16) + 101 * (key >> 8))) + key;");
+            Console.WriteLine("Check with string and objects is in progress");
             Container<string, object> container = new Container<string, object>(containerSize);
 
             for (int i = 0; i < containerSize; i++)
             {
-                container.Add(RandomString(5), RandomString(), HashMethodImplementation.GenerateHashCodeFirstCase);
+                container.Add(RandomString(5), RandomString());
             }
+            Console.WriteLine("Check was completed");
         }
 
         static void UseFirstHashAlgorithm(int containerSize)
@@ -44,6 +45,7 @@ namespace HW2_ContainerImplementation
             {
                 container.Add(i, RandomString(), HashMethodImplementation.GenerateHashCodeFirstCase);
             }
+            Console.WriteLine("First algorithm usage was completed");
         }
 
         static void UseFSecondHashAlgorithm(int containerSize)
@@ -55,6 +57,7 @@ namespace HW2_ContainerImplementation
             {
                 container.Add(i, RandomString(), HashMethodImplementation.GenerateHashCodeSecondCase);
             }
+            Console.WriteLine("Second algorithm usage was completed");
         }
 
         static void UseThirdtHashAlgorithm(int containerSize)
@@ -66,6 +69,7 @@ namespace HW2_ContainerImplementation
             {
                 container.Add(i, RandomString(), HashMethodImplementation.GenerateHashCodeSecondCase);
             }
+            Console.WriteLine("Third algorithm usage was completed");
         }
 
         public static string RandomString(int length = 50)

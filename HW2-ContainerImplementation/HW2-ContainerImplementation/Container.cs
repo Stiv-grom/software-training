@@ -34,32 +34,34 @@ namespace HW2_ContainerImplementation
             }
         }
 
-        public void Add(K key, V value, Func<int, int> HashGenerationFunction)
+        public void Add(K key, V value, Func<int, int> hashGenerationFunction = null)
         {
-            int position = GetArrayPosition(key);
+            int position = GetArrayPosition(key, hashGenerationFunction);
+
             LinkedList<Entry<K, V>> linkedList = GetLinkedList(position);
             Entry<K, V> item = new Entry<K, V>() { 
                 Key = key, 
                 Value = value
             };
 
-            if (typeof(K) == typeof(int))
-            {
-                item.hashCode = HashGenerationFunction(Convert.ToInt32(key));
-            }
-
             linkedList.AddLast(item);
-
-            //IList<Entry<K, V>> linkedList = GetLinkedList(position);
-            //linkedList.Add(item);
-
         }
 
-        protected int GetArrayPosition(K key)
+        protected int GetArrayPosition(K key, Func<int, int> hashGenerationFunction)
         {
-            int position = key.GetHashCode() % size;
+            int position = 0;
+            // I didn't override object.GetHashCode for checking different HashCode approaches simultaneously
+            if (hashGenerationFunction != null && typeof(K) == typeof(Int32))
+            {
+                position = hashGenerationFunction(Convert.ToInt32(key)) % size;
+            }
+            else 
+            {
+                position = key.GetHashCode() % size;
+            }
             return Math.Abs(position);
         }
+
 
         protected LinkedList<Entry<K, V>> GetLinkedList(int position)
         {
