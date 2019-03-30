@@ -17,21 +17,35 @@ namespace HW2_ContainerImplementation
             int containerSize = 100000;
 
             StringObjectContainer(containerSize);
+            StringObjectContainerWithoutGaps(containerSize);
             UseFirstHashAlgorithm(containerSize);
             UseFSecondHashAlgorithm(containerSize);
             UseThirdtHashAlgorithm(containerSize);
+            UseBadHash(containerSize);
 
             Console.ReadLine();
         }
 
         static void StringObjectContainer(int containerSize)
         {
-            Console.WriteLine("Check with string and objects is in progress");
+            Console.WriteLine("Container with generic hash implementation is in progress");
             Container<string, object> container = new Container<string, object>(containerSize);
 
             for (int i = 0; i < containerSize; i++)
             {
                 container.Add(RandomString(5), RandomString());
+            }
+            Console.WriteLine("Check was completed");
+        }
+
+        static void StringObjectContainerWithoutGaps(int containerSize)
+        {
+            Console.WriteLine("Array without gaps is in progress");
+            ContainerWithoutGaps<string, object> container = new ContainerWithoutGaps<string, object>(containerSize);
+
+            for (int i = 0; i < containerSize; i++)
+            {
+                container.AddLast(RandomString(5), RandomString());
             }
             Console.WriteLine("Check was completed");
         }
@@ -70,6 +84,19 @@ namespace HW2_ContainerImplementation
                 container.Add(i, RandomString(), HashMethodImplementation.GenerateHashCodeSecondCase);
             }
             Console.WriteLine("Third algorithm usage was completed");
+        }
+
+
+        static void UseBadHash(int containerSize)
+        {
+            Console.WriteLine("Using bad hash algorithm: hash = key");
+            Container<int, object> container = new Container<int, object>(containerSize);
+
+            for (int i = 0; i < containerSize; i++)
+            {
+                container.Add(i, RandomString(), HashMethodImplementation.BadHashExample);
+            }
+            Console.WriteLine("Bad hash usage was completed");
         }
 
         public static string RandomString(int length = 50)

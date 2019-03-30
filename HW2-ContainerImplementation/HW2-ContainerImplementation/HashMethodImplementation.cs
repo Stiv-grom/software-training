@@ -24,5 +24,10 @@ namespace HW2_ContainerImplementation
         {
             return key;
         }
+
+        public static int BadHashExample(int key)
+        {
+            return key % 25;
+        }
     }
 }
