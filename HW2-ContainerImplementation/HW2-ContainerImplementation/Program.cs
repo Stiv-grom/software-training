@@ -9,24 +9,23 @@ namespace HW2_ContainerImplementation
     class Program
     {
         private static Random random = new Random();
+        private const int containerSize = 100000;
 
         static void Main(string[] args)
         {
             Console.WriteLine("HW2: Implement Javascript-like associated container");
 
-            int containerSize = 100000;
-
-            StringObjectContainer(containerSize);
-            StringObjectContainerWithoutGaps(containerSize);
-            UseFirstHashAlgorithm(containerSize);
-            UseFSecondHashAlgorithm(containerSize);
-            UseThirdtHashAlgorithm(containerSize);
-            UseBadHash(containerSize);
+            StringObjectContainer();
+            StringObjectContainerWithoutGaps();
+            UseFirstHashAlgorithm();
+            UseSecondHashAlgorithm();
+            UseThirdtHashAlgorithm();
+            UseBadHash();
 
             Console.ReadLine();
         }
 
-        static void StringObjectContainer(int containerSize)
+        static void StringObjectContainer()
         {
             Console.WriteLine("Container with generic hash implementation is in progress");
             Container<string, object> container = new Container<string, object>(containerSize);
@@ -38,7 +37,7 @@ namespace HW2_ContainerImplementation
             Console.WriteLine("Check was completed");
         }
 
-        static void StringObjectContainerWithoutGaps(int containerSize)
+        static void StringObjectContainerWithoutGaps()
         {
             Console.WriteLine("Array without gaps is in progress");
             ContainerWithoutGaps<string, object> container = new ContainerWithoutGaps<string, object>(containerSize);
@@ -50,7 +49,7 @@ namespace HW2_ContainerImplementation
             Console.WriteLine("Check was completed");
         }
 
-        static void UseFirstHashAlgorithm(int containerSize)
+        static void UseFirstHashAlgorithm()
         {
             Console.WriteLine("Using first algorithm: 101 * ((key >> 24) + 101 * ((key >> 16) + 101 * (key >> 8))) + key;");
             Container<int, object> container = new Container<int, object>(containerSize);
@@ -62,7 +61,7 @@ namespace HW2_ContainerImplementation
             Console.WriteLine("First algorithm usage was completed");
         }
 
-        static void UseFSecondHashAlgorithm(int containerSize)
+        static void UseSecondHashAlgorithm()
         {
             Console.WriteLine("Using second algorithm: ((key >> 16) ^ key) * 0x45d9f3b");
             Container<int, object> container = new Container<int, object>(containerSize);
@@ -74,7 +73,7 @@ namespace HW2_ContainerImplementation
             Console.WriteLine("Second algorithm usage was completed");
         }
 
-        static void UseThirdtHashAlgorithm(int containerSize)
+        static void UseThirdtHashAlgorithm()
         {
             Console.WriteLine("Using third algorithm: hash = key");
             Container<int, object> container = new Container<int, object>(containerSize);
@@ -86,8 +85,7 @@ namespace HW2_ContainerImplementation
             Console.WriteLine("Third algorithm usage was completed");
         }
 
-
-        static void UseBadHash(int containerSize)
+        static void UseBadHash()
         {
             Console.WriteLine("Using bad hash algorithm: hash = key");
             Container<int, object> container = new Container<int, object>(containerSize);

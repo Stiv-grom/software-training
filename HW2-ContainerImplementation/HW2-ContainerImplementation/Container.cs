@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HW2_ContainerImplementation
 {
@@ -47,7 +44,6 @@ namespace HW2_ContainerImplementation
             }
             return Math.Abs(position);
         }
-
 
         protected LinkedList<Entry<K, V>> GetLinkedList(int position)
         {
