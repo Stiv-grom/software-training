@@ -23,13 +23,19 @@ namespace HW2_ContainerImplementation
             var summary = BenchmarkRunner.Run<ContainerRunner>();
             
             Benchmark results
-            |              Method |     Mean |     Error |    StdDev |   Median |
-            |-------------------- |---------:|----------:|----------:|---------:|
-            |  BenchmarkFirstHash | 361.0 ms | 15.327 ms | 44.951 ms | 347.6 ms |
-            | BenchmarkSecondHash | 335.0 ms |  6.607 ms |  6.181 ms | 334.5 ms |
-            |  BenchmarkThirdHash | 340.1 ms |  6.795 ms | 11.539 ms | 338.8 ms |
-            
-             ((key >> 16) ^ key) * 0x45d9f3b - is the most efficient hash-calculation from the proposed options*/
+            |              Method |     Mean |     Error |   StdDev |   Median |
+            |-------------------- |---------:|----------:|---------:|---------:|
+            |  BenchmarkFirstHash | 359.1 ms | 17.649 ms | 51.20 ms | 339.1 ms |
+            | BenchmarkSecondHash | 350.7 ms |  6.992 ms | 18.90 ms | 343.8 ms |
+            |  BenchmarkThirdHash | 363.2 ms |  8.219 ms | 22.36 ms | 359.3 ms |
+            |    BenchmarkBadHash | 290.8 ms |  5.777 ms | 11.27 ms | 286.5 ms |
+ 
+             ((key >> 16) ^ key) * 0x45d9f3b - is the most efficient hash-calculation from the proposed options
+             BadHash is fast enough, but results are unevenly distributed and a lot of collisions are created, 
+             so Find algorithm will be unefficient
+
+            Using of Array without gaps is unefficient and takes too long time
+             */
         }
     }
 
@@ -107,7 +113,7 @@ namespace HW2_ContainerImplementation
 
         public static void UseBadHash()
         {
-            Console.WriteLine("Using bad hash algorithm: hash = key");
+            Console.WriteLine("Using bad hash algorithm: hash = key.ToString().Length * 2");
             Container<int, object> container = new Container<int, object>(containerSize);
 
             for (int i = 0; i < containerSize; i++)
@@ -144,6 +150,12 @@ namespace HW2_ContainerImplementation
             UseThirdHashAlgorithm();
         }
 
+
+        [Benchmark]
+        public void BenchmarkBadHash()
+        {
+            UseBadHash();
+        }
         #endregion
     }
 }
