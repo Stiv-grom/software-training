@@ -27,7 +27,7 @@ namespace HW2_ContainerImplementation
 
         public static int BadHashExample(int key)
         {
-            return key % 25;
+            return key.ToString().Length * 2;
         }
     }
 }
