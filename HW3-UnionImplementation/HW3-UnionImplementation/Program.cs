@@ -26,6 +26,8 @@ namespace HW3_UnionImplementation
             UnionImplementation.ListsUnionAll(apartments, apartments2);
             UnionImplementation.ListsUnion(apartments, apartments2);
 
+            // benchmark goes out of memory during file read
+            // perhaps a root of this issue: https://github.com/dotnet/BenchmarkDotNet/issues/828
             //var summary = BenchmarkRunner.Run<UnionImplementation>();
 
             Console.WriteLine("Completed");
