@@ -103,6 +103,13 @@ namespace HW3_UnionImplementation
             watch.Stop();
             var elapsedMs = watch.ElapsedMilliseconds;
 
+            var result = customUnionAllResult.Select(x => new ApartmentResult()
+            {
+                Name = x.Name,
+                Latitude = x.Latitude,
+                Longitude = x.Longitude
+            }).ToList();
+
             Console.WriteLine(@"Custom UnionAll was done in {0} ms, results count: {1}", elapsedMs, customUnionAllResult.Count);
         }
 
