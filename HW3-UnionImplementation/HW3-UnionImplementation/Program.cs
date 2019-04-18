@@ -25,7 +25,8 @@ namespace HW3_UnionImplementation
 
             UnionImplementation.ListsUnionAll(apartments, apartments2);
             UnionImplementation.ListsUnion(apartments, apartments2);
-            UnionImplementation.CustomUnionAll(apartments, apartments2);
+			UnionImplementation.CustomUnionAll(apartments, apartments2);
+            UnionImplementation.CustomUnion(apartments, apartments2);
 
             // benchmark goes out of memory during file read
             // perhaps a root of this issue: https://github.com/dotnet/BenchmarkDotNet/issues/828
@@ -94,23 +95,32 @@ namespace HW3_UnionImplementation
         public static void CustomUnionAll(IEnumerable<Apartment> apartments, IEnumerable<Apartment> apartments2)
         {
             var watch = Stopwatch.StartNew();
+            var customUnionAllResult = apartments.Concat(apartments2);
+            var elapsedMs = watch.ElapsedMilliseconds;
+
+            Console.WriteLine(@"Custom UnionAll was done in {0} ms, results count: {1}", elapsedMs, customUnionAllResult.Count());
+        }
+
+        public static void CustomUnion (IEnumerable<Apartment> apartments, IEnumerable<Apartment> apartments2)
+        {
+            var watch = Stopwatch.StartNew();
             var customApartmentComparer = new ApartmentComparer();
-            var customUnionAllResult = new HashSet<Apartment>(apartments, customApartmentComparer);
+            var customUnionResult = new HashSet<Apartment>(apartments, customApartmentComparer);
             foreach (Apartment ap in apartments2)
             {
-                customUnionAllResult.Add(ap);
+                customUnionResult.Add(ap);
             }
             watch.Stop();
             var elapsedMs = watch.ElapsedMilliseconds;
 
-            var result = customUnionAllResult.Select(x => new ApartmentResult()
+            var result = customUnionResult.Select(x => new ApartmentResult()
             {
                 Name = x.Name,
                 Latitude = x.Latitude,
                 Longitude = x.Longitude
             }).ToList();
 
-            Console.WriteLine(@"Custom UnionAll was done in {0} ms, results count: {1}", elapsedMs, customUnionAllResult.Count);
+            Console.WriteLine(@"Custom Union was done in {0} ms, results count: {1}", elapsedMs, customUnionResult.Count);
         }
 
         #region Benchmarks
