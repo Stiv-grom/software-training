@@ -25,6 +25,7 @@ namespace HW3_UnionImplementation
 
             UnionImplementation.ListsUnionAll(apartments, apartments2);
             UnionImplementation.ListsUnion(apartments, apartments2);
+            UnionImplementation.CustomUnionAll(apartments, apartments2);
 
             // benchmark goes out of memory during file read
             // perhaps a root of this issue: https://github.com/dotnet/BenchmarkDotNet/issues/828
@@ -88,6 +89,21 @@ namespace HW3_UnionImplementation
             watch.Stop();
             var elapsedMs = watch.ElapsedMilliseconds;
             Console.WriteLine(@"UnionAll was done in {0} ms, results count: {1}", elapsedMs, unionAllResult.Count);
+        }
+
+        public static void CustomUnionAll(IEnumerable<Apartment> apartments, IEnumerable<Apartment> apartments2)
+        {
+            var watch = Stopwatch.StartNew();
+            var customApartmentComparer = new ApartmentComparer();
+            var customUnionAllResult = new HashSet<Apartment>(apartments, customApartmentComparer);
+            foreach (Apartment ap in apartments2)
+            {
+                customUnionAllResult.Add(ap);
+            }
+            watch.Stop();
+            var elapsedMs = watch.ElapsedMilliseconds;
+
+            Console.WriteLine(@"Custom UnionAll was done in {0} ms, results count: {1}", elapsedMs, customUnionAllResult.Count);
         }
 
         #region Benchmarks
