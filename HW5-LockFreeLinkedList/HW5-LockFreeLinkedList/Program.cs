@@ -13,9 +13,18 @@ namespace HW5_LockFreeLinkedList
             Console.WriteLine(@"HW5 - Create linked-list container that supports lock-free adding to list head");
 
             CustomLinkedList customList = new CustomLinkedList();
-            customList.InsertFront(new { property = "test" });
-            customList.InsertFront(new { property = "test2" });
-            customList.InsertFront(new { property = "test3" });
+            customList.AddFirst(new { property = "test" });
+            customList.AddFirst(new { property = "test2" });
+            customList.AddFirst(new { property = "test3" });
+
+            CustomLinkedList customListLockFree = new CustomLinkedList();
+            customListLockFree.AddFirstLockFree(new { property = "test" });
+            customListLockFree.AddFirstLockFree(new { property = "test2" });
+            customListLockFree.AddFirstLockFree(new { property = "test3" });
+
+            bool comparingResult = customList.Equals(customListLockFree);
+
+            Console.WriteLine(@"Lock-free and general method results of adding are {0} equal", comparingResult ? "" : "not");
 
             Console.ReadLine();
         }
