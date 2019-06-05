@@ -6,6 +6,7 @@ namespace HW5_LockFreeLinkedList
     internal class CustomLinkedList
     {
         volatile Node head;
+        volatile Node addedNode;
 
         internal void AddFirst(object data)
         {
@@ -16,7 +17,7 @@ namespace HW5_LockFreeLinkedList
 
         internal void AddFirstLockFree(object data)
         {
-            Node addedNode = new Node(data);
+            addedNode = new Node(data);
             addedNode.Next = head;
             Interlocked.Exchange(ref head, addedNode);
         }
