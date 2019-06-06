@@ -17,9 +17,15 @@ namespace HW5_LockFreeLinkedList
 
         internal void AddFirstLockFree(object data)
         {
-            addedNode = new Node(data);
-            addedNode.Next = head;
-            Interlocked.Exchange(ref head, addedNode);
+            Node computedValue;
+            do
+            {
+                addedNode = new Node(data);
+                addedNode.Next = head;
+                computedValue = addedNode;
+                Interlocked.Exchange(ref head, addedNode);
+            }
+            while (addedNode != Interlocked.CompareExchange(ref head, computedValue, addedNode));
         }
 
         public bool IsEmpty()
